@@ -1,5 +1,5 @@
 Feature: Desafio 2
-
+    @focus
     Scenario: Validar la pagina en mobile - Existencia del menú
         Given que un usuario ingresa a la página "https://www.darwoft.com/"
         And el tamaño de la pantalla es "samsung-s10" y su orientación "portrait"
@@ -20,4 +20,4 @@ Feature: Desafio 2
         And el tamaño de la pantalla es "samsung-s10" y su orientación "landscape"
         When selecciona el menú
         And selecciona la opción "Blog" del menú
-        Then se valida imágenes, links, fechas y botones
+        Then se valida título, imágenes, links, fechas y botones
