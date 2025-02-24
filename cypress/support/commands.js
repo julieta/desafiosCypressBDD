@@ -23,3 +23,16 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+const Ajv = require("ajv");
+const ajv = new Ajv({ allErrors: true, verbose: true, strict: false });
+
+
+Cypress.Commands.add("validateSchema", (responseBody, schema) => {
+    const validate = ajv.compile(schema);
+    const valid = validate(responseBody);
+
+    if (!valid) {
+        cy.log("Errores de validación:", validate.errors);
+        throw new Error(`Esquema inválido: ${JSON.stringify(validate.errors, null, 2)}`);
+    }
+});
