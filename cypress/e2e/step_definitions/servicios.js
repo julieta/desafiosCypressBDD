@@ -27,9 +27,35 @@ Then(`se agrega por servicio un producto al carrito`, () => {
     cy.readFile(`cypress/fixtures/servicios/servicio.json`).then((productData) => {
         cy.request({
             method: "POST",
-            url: `https://simple-grocery-store-api.online/carts/${productData.cartId}/items`,
+            url: `https://simple-grocery-store-api.glitch.me/carts/${productData.cartId}/items`,
             body: { productId: 4643 }
+        }).then((response) => {
+            const file = `cypress/fixtures/servicios/servicio_agregarProducto.json`;
+            cy.writeFile(file, response.body);
         })
     });
 });
 
+/*
+When(`se cambia por servicio el producto  y se valida respuesta`, () => {
+    cy.readFile(`cypress/fixtures/servicios/servicio.json`).then((productDataCardId) => {
+        cy.log(productDataCardId.cartId);
+        cy.readFile(`cypress/fixtures/servicios/servicio_agregarProducto.json`).then((productDataItemid) => {
+            cy.log(productDataItemid.itemId);
+            cy.request({
+                method: "PUT",
+                url: `https://simple-grocery-store-api.glitch.me/carts/${productDataCardId.cartId}/items/${productDataItemid.itemId}`,
+                body: { productId: 4646 }
+            })
+        });
+    });
+    cy.request({
+        method: "GET",
+        url: `https://simple-grocery-store-api.glitch.me/carts/${productDataCardId.cartId}`,
+    })
+    cy.request({
+        method: "GET",
+        url: `https://simple-grocery-store-api.glitch.me/carts/${productDataCardId.cartId}/items`,
+    }).
+});
+*/
