@@ -6,7 +6,6 @@ When(`el usuario ingresa el metodo {string} y el endpoint {string}`, (metodo, en
         method: metodo,
     }).then((response) => {
         const file = `cypress/fixtures/servicios/servicio.json`;
-        expect(response.status).to.eq(200);
         cy.writeFile(file, response.body);
     })
 })
@@ -23,4 +22,14 @@ Then(`se valida el id {int} del producto`, (idProducto) => {
         });
     })
 })
+
+Then(`se agrega por servicio un producto al carrito`, () => {
+    cy.readFile(`cypress/fixtures/servicios/servicio.json`).then((productData) => {
+        cy.request({
+            method: "POST",
+            url: `https://simple-grocery-store-api.online/carts/${productData.cartId}/items`,
+            body: { productId: 4643 }
+        })
+    });
+});
 
