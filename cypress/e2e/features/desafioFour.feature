@@ -5,12 +5,12 @@ Feature: desafío 4
         Then se valida el id 4641 del producto
 
 
-    Scenario: servicio de productos -POST
+    Scenario: Crear carrito - POST
         When el usuario ingresa el metodo "POST" y el endpoint "https://simple-grocery-store-api.glitch.me/carts"
         Then se agrega por servicio un producto al carrito
 
 
-    Scenario: servicio de productos -PUT
+    Scenario: Cambiar producto del carrito - PUT
         When el usuario ingresa el metodo "POST" y el endpoint "https://simple-grocery-store-api.glitch.me/carts"
         And se agrega por servicio un producto al carrito
         And se cambia por servicio el producto y se valida respuesta

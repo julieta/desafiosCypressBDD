@@ -36,8 +36,8 @@ Then(`se agrega por servicio un producto al carrito`, () => {
     });
 });
 
-/*
-When(`se cambia por servicio el producto  y se valida respuesta`, () => {
+
+When(`se cambia por servicio el producto y se valida respuesta`, () => {
     cy.readFile(`cypress/fixtures/servicios/servicio.json`).then((productDataCardId) => {
         cy.log(productDataCardId.cartId);
         cy.readFile(`cypress/fixtures/servicios/servicio_agregarProducto.json`).then((productDataItemid) => {
@@ -46,16 +46,25 @@ When(`se cambia por servicio el producto  y se valida respuesta`, () => {
                 method: "PUT",
                 url: `https://simple-grocery-store-api.glitch.me/carts/${productDataCardId.cartId}/items/${productDataItemid.itemId}`,
                 body: { productId: 4646 }
-            })
+            }).then((response) => {
+                expect(response.status).to.eq(204);
+            });
         });
+
+
+        cy.request({
+            method: "GET",
+            url: `https://simple-grocery-store-api.glitch.me/carts/${productDataCardId.cartId}`,
+        }).then((response) => {
+            expect(response.status).to.eq(200);
+        });
+
+        cy.request({
+            method: "GET",
+            url: `https://simple-grocery-store-api.glitch.me/carts/${productDataCardId.cartId}/items`,
+        }).then((response) => {
+            expect(response.status).to.eq(200);
+        })
     });
-    cy.request({
-        method: "GET",
-        url: `https://simple-grocery-store-api.glitch.me/carts/${productDataCardId.cartId}`,
-    })
-    cy.request({
-        method: "GET",
-        url: `https://simple-grocery-store-api.glitch.me/carts/${productDataCardId.cartId}/items`,
-    }).
 });
-*/
+
