@@ -68,3 +68,43 @@ When(`se cambia por servicio el producto y se valida respuesta`, () => {
     });
 });
 
+
+
+When(`el metodo {string} y endpoint {string}`, (metodo, endpoint, dataTable) => {
+    const bodyData = JSON.parse(dataTable.rawTable.map(row => row[1]).join(""));
+    cy.request({
+        method: metodo,
+        url: endpoint,
+        body: bodyData
+    }).then(response => {
+        expect(response.status).to.eq(201);
+        cy.writeFile('cypress/fixtures/cliente/cliente.json', response.body);
+    });
+})
+
+When(`se crea por servicio {string} un pedido para el cliente {string}`, (endpoint, nombre) => {
+
+    cy.readFile(`cypress/fixtures/cliente/cliente.json`).then((token) => {
+        const token = token.accessToken
+        cy.log("token", token);
+        cy.readFile(`cypress/fixtures/servicios/servicio.json`).then((cartData) => {
+            const cartId = cartData.cartId
+            cy.log("cartId", cartId);
+
+            cy.request({
+                method: "POST",
+                url: endpoint,
+                body: {
+                    "cartId": cartId,
+                    "customerName": nombre
+                },
+                headers: { "Authorization": token }
+            }).then((response) => {
+                expect(response.status).to.eq(201);
+            });
+        });
+    });
+});
+
+
+
