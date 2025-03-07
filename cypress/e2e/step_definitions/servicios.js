@@ -68,10 +68,9 @@ When(`se cambia por servicio el producto y se valida respuesta`, () => {
     });
 });
 
-
-
 When(`el metodo {string} y endpoint {string}`, (metodo, endpoint, dataTable) => {
     const bodyData = JSON.parse(dataTable.rawTable.map(row => row[1]).join(""));
+    cy.log("bodyData", bodyData)
     cy.request({
         method: metodo,
         url: endpoint,
@@ -83,7 +82,6 @@ When(`el metodo {string} y endpoint {string}`, (metodo, endpoint, dataTable) => 
 })
 
 When(`se crea por servicio {string} un pedido para el cliente {string}`, (endpoint, nombre) => {
-
     cy.readFile(`cypress/fixtures/cliente/cliente.json`).then((token) => {
         const token = token.accessToken
         cy.log("token", token);
