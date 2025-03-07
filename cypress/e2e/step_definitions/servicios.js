@@ -1,4 +1,4 @@
-import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
+import { When, Then } from "@badeball/cypress-cucumber-preprocessor";
 
 When(`el usuario ingresa el metodo {string} y el endpoint {string}`, (metodo, endpoint) => {
     cy.request({
@@ -99,10 +99,10 @@ When(`se crea por servicio {string} un pedido para el cliente {string}`, (endpoi
                 headers: { "Authorization": token }
             }).then((response) => {
                 expect(response.status).to.eq(201);
+                cy.writeFile('cypress/fixtures/orders/orders.json', response.body);
             });
         });
     });
 });
-
 
 
